@@ -1,0 +1,9 @@
+'use strict'
+
+exports.getRandomInt = function (min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+exports.getRandomItemFromList = function (items) {
+    return items[Math.floor(Math.random()*items.length)]
+}
