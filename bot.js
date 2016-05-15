@@ -24,11 +24,12 @@ console.log('bot server started...')
 
 bot.onText(/^\/danbooru((\s\w+)+)$/i, (msg, match) => {
     danbooru.search(match[1].trim(), (err, data) => {
-        console.log(err)
-        if(data.random()){
-            // console.log(data.random().source)
-            // bot.sendMessage(msg.chat.id, data.random().get().uri.href, {'reply_to_message_id': msg.message_id})
-            bot.sendMessage(msg.chat.id, data.random().source, {'reply_to_message_id': msg.message_id})
+        if(err){
+            bot.sendMessage(msg.chat.id, 'Erro no servidor :<', {'reply_to_message_id': msg.message_id})
+        } else {
+            if(data.random()){
+                bot.sendMessage(msg.chat.id, data.random().source, {'reply_to_message_id': msg.message_id})
+            }
         }
     })
 
