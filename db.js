@@ -7,7 +7,7 @@ var state = {
 exports.connect = function(done) {
   if (state.db) return done()
 
-  MongoClient.connect('mongodb://localhost:27017/motobot', function(err, db) {
+  MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
     if (err) return done(err)
     state.db = db
     done()
