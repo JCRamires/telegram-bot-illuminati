@@ -5,7 +5,15 @@ const danbooru = require('danbooru')
 const token = process.env.BOT_TOKEN
 
 const Bot = require('node-telegram-bot-api')
-const bot = new Bot(token, {polling: true})
+let bot
+
+if(process.env.NODE_ENV === 'production') {
+  bot = new Bot(token);
+  bot.setWebHook(process.env.WEB_ROOT + bot.token);
+}
+else {
+  bot = new Bot(token, { polling: true });
+}
 
 const db = require('./db')
 
