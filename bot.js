@@ -8,6 +8,7 @@ const Bot = require('node-telegram-bot-api')
 let bot
 
 if(process.env.NODE_ENV === 'production') {
+  console.log('webhook', process.env.WEB_ROOT + bot.token)
   bot = new Bot(token);
   bot.setWebHook(process.env.WEB_ROOT + bot.token);
 }
