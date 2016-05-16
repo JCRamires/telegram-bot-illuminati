@@ -28,7 +28,7 @@ bot.onText(/^\/danbooru((\s\w+)+)$/i, (msg, match) => {
             bot.sendMessage(msg.chat.id, 'Erro no servidor :<', {'reply_to_message_id': msg.message_id})
         } else {
             if(data.random()){
-                bot.sendMessage(msg.chat.id, data.random().source, {'reply_to_message_id': msg.message_id})
+                bot.sendMessage(msg.chat.id, data.random().source)
             }
         }
     })
@@ -77,9 +77,9 @@ bot.onText(/loli/i, (msg, match) => {
 })
 
 bot.onText(/psx/i, (msg, match) => {
-    bot.sendSticker(msg.chat.id, './stickers/naoPerpetueErro.webp', {'reply_to_message_id': msg.message_id})
+    bot.sendSticker(msg.chat.id, './stickers/naoPerpetueErro.webp')
 })
 
 bot.onText(/pizza/i, (msg, match) => {
-    bot.sendMessage(msg.chat.id, 'Coma pizza todo dia', {'reply_to_message_id': msg.message_id})
+    bot.sendMessage(msg.chat.id, 'Coma pizza todo dia')
 })
