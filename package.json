@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "danbooru": "^1.4.8",
+    "express": "^4.13.4",
     "mongodb": "^2.1.18",
     "node-telegram-bot-api": "^0.21.1"
   }

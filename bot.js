@@ -2,7 +2,7 @@
 
 const fs = require('fs')
 const danbooru = require('danbooru')
-const token = '[TOKEN]'
+const token = process.env.BOT_TOKEN
 
 const Bot = require('node-telegram-bot-api')
 const bot = new Bot(token, {polling: true})
