@@ -5,16 +5,8 @@ const danbooru = require('danbooru')
 const token = process.env.BOT_TOKEN
 
 const Bot = require('node-telegram-bot-api')
-let bot
 
-if(process.env.NODE_ENV === 'production') {
-  bot = new Bot(token)
-  console.log('webhook', process.env.WEB_ROOT + bot.token)
-  bot.setWebHook(process.env.WEB_ROOT + bot.token);
-}
-else {
-  bot = new Bot(token, { polling: true });
-}
+const botInstance = new Bot(token, { polling: true })
 
 const db = require('./db')
 
@@ -29,22 +21,22 @@ db.connect(function (err) {
     db.get().createCollection('quotes')
 })
 
-console.log('bot server started...')
+console.log('botInstance server started...')
 
-bot.onText(/^\/danbooru((\s\w+)+)$/i, (msg, match) => {
+botInstance.onText(/^\/danbooru((\s\w+)+)$/i, (msg, match) => {
     danbooru.search(match[1].trim(), (err, data) => {
         if(err){
-            bot.sendMessage(msg.chat.id, 'Erro no servidor :<', {'reply_to_message_id': msg.message_id})
+            botInstance.sendMessage(msg.chat.id, 'Erro no servidor :<', {'reply_to_message_id': msg.message_id})
         } else {
             if(data.random()){
-                bot.sendMessage(msg.chat.id, data.random().source)
+                botInstance.sendMessage(msg.chat.id, data.random().source)
             }
         }
     })
 
 })
 
-bot.onText(/^\/add_quote\s(.*)$/i, (msg, match) => {
+botInstance.onText(/^\/add_quote\s(.*)$/i, (msg, match) => {
     let criador
     if (msg.from.username) {
         criador = msg.from.username
@@ -62,33 +54,33 @@ bot.onText(/^\/add_quote\s(.*)$/i, (msg, match) => {
     collection.insertOne(quote)
 })
 
-bot.onText(/^\/quote$/i, (msg, match) => {
+botInstance.onText(/^\/quote$/i, (msg, match) => {
     let collection = db.get().collection('quotes')
     collection.find({}).toArray().then((data) => {
         if(data){
             let quote = utils.getRandomItemFromList(data)
-            bot.sendMessage(msg.chat.id, quote.mensagem)
+            botInstance.sendMessage(msg.chat.id, quote.mensagem)
         }
     })
 })
 
-bot.onText(/loli/i, (msg, match) => {
+botInstance.onText(/loli/i, (msg, match) => {
     utils.getRandomInt(1,2)
 
     switch (utils.getRandomInt(1,2)){
         case 1:
-            bot.sendSticker(msg.chat.id, './stickers/cocabird.webp', {'reply_to_message_id': msg.message_id})
+            botInstance.sendSticker(msg.chat.id, './stickers/cocabird.webp', {'reply_to_message_id': msg.message_id})
             break
         case 2:
-            bot.sendDocument(msg.chat.id, './imagens/policecar.gif', {'reply_to_message_id': msg.message_id})
+            botInstance.sendDocument(msg.chat.id, './imagens/policecar.gif', {'reply_to_message_id': msg.message_id})
             break
     }
 })
 
-bot.onText(/psx/i, (msg, match) => {
-    bot.sendSticker(msg.chat.id, './stickers/naoPerpetueErro.webp')
+botInstance.onText(/psx/i, (msg, match) => {
+    botInstance.sendSticker(msg.chat.id, './stickers/naoPerpetueErro.webp')
 })
 
-bot.onText(/pizza/i, (msg, match) => {
-    bot.sendMessage(msg.chat.id, 'Coma pizza todo dia')
+botInstance.onText(/pizza/i, (msg, match) => {
+    botInstance.sendMessage(msg.chat.id, 'Coma pizza todo dia')
 })
