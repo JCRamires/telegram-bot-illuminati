@@ -18,6 +18,7 @@ var server = app.listen(process.env.PORT, function () {
 
 module.exports = function (bot) {
   app.post('/' + bot.token, function (req, res) {
+    console.log('POST TOKEN')
     bot.processUpdate(req.body)
     res.sendStatus(200)
   })
