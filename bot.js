@@ -7,14 +7,15 @@ const token = process.env.BOT_TOKEN
 const Bot = require('node-telegram-bot-api')
 let botInstance
 
-if(process.env.NODE_ENV === 'production') {
-  botInstance = new Bot(token)
-  console.log('webhook', process.env.WEB_ROOT + botInstance.token)
-  botInstance.setWebHook(process.env.WEB_ROOT + botInstance.token, './public.pem');
-}
-else {
-  botInstance = new Bot(token, { polling: true });
-}
+// if(process.env.NODE_ENV === 'production') {
+//   botInstance = new Bot(token)
+//   console.log('webhook', process.env.WEB_ROOT + botInstance.token)
+//   botInstance.setWebHook(process.env.WEB_ROOT + botInstance.token, './public.pem');
+// }
+// else {
+botInstance = new Bot(token, { polling: true });
+botInstance.setWebHook('');
+// }
 
 const db = require('./db')
 
