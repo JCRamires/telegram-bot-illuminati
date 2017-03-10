@@ -39,6 +39,16 @@ db.connect(function (err) {
 
 console.log('botInstance server started...')
 
+let timeLastCommandUsed
+
+function checkIfMinuteHasPassed() {
+  if (Math.floor((new Date() - timeLastCommandUsed)/60000) < 10) {
+    return false
+  }
+  
+  return true
+}
+
 botInstance.onText(/^\/danbooru((\s\w+)+)$/i, (msg, match) => {
     danbooru.search(match[1].trim(), (err, data) => {
         if(err){
@@ -81,6 +91,7 @@ botInstance.onText(/^\/quote$/i, (msg, match) => {
 })
 
 botInstance.onText(/loli/i, (msg, match) => {
+  if(checkIfMinuteHasPassed()) {
     utils.getRandomInt(1,2)
 
     switch (utils.getRandomInt(1,2)){
@@ -91,12 +102,23 @@ botInstance.onText(/loli/i, (msg, match) => {
             botInstance.sendDocument(msg.chat.id, './imagens/policecar.gif', {'reply_to_message_id': msg.message_id})
             break
     }
+    
+    timeLastCommandUsed = Date.now()    
+  }
 })
 
 botInstance.onText(/psx/i, (msg, match) => {
+  if(checkIfMinuteHasPassed()) {
     botInstance.sendSticker(msg.chat.id, './stickers/naoPerpetueErro.webp')
+    
+    timeLastCommandUsed = Date.now()
+  }
 })
 
 botInstance.onText(/pizza/i, (msg, match) => {
+  if(checkIfMinuteHasPassed()) {
     botInstance.sendMessage(msg.chat.id, 'Coma pizza todo dia')
+    
+    timeLastCommandUsed = Date.now()
+  }
 })
