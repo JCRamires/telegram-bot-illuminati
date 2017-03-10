@@ -34,15 +34,22 @@ db.connect(function (err) {
     }
 
     db.get().createCollection('quotes')
+    db.get().createCollection('timers')
+    
+    let timers = db.get().collection('timers')
+    timers.update({ commandCode: 'loli' }, {cooldownTime: 10}, {upsert: true})
+    timers.update({ commandCode: 'psx' }, {cooldownTime: 10}, {upsert: true})
+    timers.update({ commandCode: 'pizza' }, {cooldownTime: 10}, {upsert: true})
+    timers.update({ commandCode: 'danbooru' }, {cooldownTime: 0}, {upsert: true})
 })
 
 console.log('botInstance server started...')
 
 let timeLastCommandUsed
 
-function checkIfMinuteHasPassed() {
-  if (timeLastCommandUsed != undefined) {
-    if (Math.floor((new Date() - timeLastCommandUsed)/60000) < 10) {
+function checkIfMinutesHavePassed(lastTimeUsed, minutes) {
+  if (lastTimeUsed != undefined) {
+    if (Math.floor((new Date() - lastTimeUsed)/60000) < minutes) {
       return false
     }
   }
@@ -50,7 +57,21 @@ function checkIfMinuteHasPassed() {
   return true
 }
 
+function checkCommandCooldown(commandCode) {
+  if(checkIfMinutesHavePassed(timeLastCommandUsed, 1)) {
+    let timers = db.get().collection('timers')
+    let command = timers.findOne({ commandCode })
+    
+    if(checkIfMinutesHavePassed(command.lastTimeUsed, command.cooldownTime)) {
+      timers.update({commandCode}, {lastTimeUsed: Date.now()}, {upsert: true})
+      return true
+    }
+  }
+  return false
+}
+
 botInstance.onText(/^\/danbooru((\s\w+)+)$/i, (msg, match) => {
+  if(checkCommandCooldown('danbooru')) {
     danbooru.search(match[1].trim(), (err, data) => {
         if(err){
             botInstance.sendMessage(msg.chat.id, 'Erro no servidor :<', {'reply_to_message_id': msg.message_id})
@@ -60,39 +81,41 @@ botInstance.onText(/^\/danbooru((\s\w+)+)$/i, (msg, match) => {
             }
         }
     })
-
+    
+    timeLastCommandUsed = Date.now()
+  }
 })
 
-botInstance.onText(/^\/add_quote\s(.*)$/i, (msg, match) => {
-    let criador
-    if (msg.from.username) {
-        criador = msg.from.username
-    } else {
-        criador = msg.from.first_name
-    }
-
-    let quote = {
-        mensagem: match[1],
-        criador: criador,
-        criada: Date.now()
-    }
-
-    let collection = db.get().collection('quotes')
-    collection.insertOne(quote)
-})
-
-botInstance.onText(/^\/quote$/i, (msg, match) => {
-    let collection = db.get().collection('quotes')
-    collection.find({}).toArray().then((data) => {
-        if(data){
-            let quote = utils.getRandomItemFromList(data)
-            botInstance.sendMessage(msg.chat.id, quote.mensagem)
-        }
-    })
-})
+// botInstance.onText(/^\/add_quote\s(.*)$/i, (msg, match) => {
+//     let criador
+//     if (msg.from.username) {
+//         criador = msg.from.username
+//     } else {
+//         criador = msg.from.first_name
+//     }
+// 
+//     let quote = {
+//         mensagem: match[1],
+//         criador: criador,
+//         criada: Date.now()
+//     }
+// 
+//     let collection = db.get().collection('quotes')
+//     collection.insertOne(quote)
+// })
+// 
+// botInstance.onText(/^\/quote$/i, (msg, match) => {
+//     let collection = db.get().collection('quotes')
+//     collection.find({}).toArray().then((data) => {
+//         if(data){
+//             let quote = utils.getRandomItemFromList(data)
+//             botInstance.sendMessage(msg.chat.id, quote.mensagem)
+//         }
+//     })
+// })
 
 botInstance.onText(/loli/i, (msg, match) => {
-  if(checkIfMinuteHasPassed()) {
+  if(checkCommandCooldown('loli')) {
     utils.getRandomInt(1,2)
 
     switch (utils.getRandomInt(1,2)){
@@ -104,12 +127,12 @@ botInstance.onText(/loli/i, (msg, match) => {
             break
     }
     
-    timeLastCommandUsed = Date.now()    
+    timeLastCommandUsed = Date.now()
   }
 })
 
 botInstance.onText(/psx/i, (msg, match) => {
-  if(checkIfMinuteHasPassed()) {
+  if(checkCommandCooldown('psx')) {
     botInstance.sendSticker(msg.chat.id, './stickers/naoPerpetueErro.webp')
     
     timeLastCommandUsed = Date.now()
@@ -117,7 +140,7 @@ botInstance.onText(/psx/i, (msg, match) => {
 })
 
 botInstance.onText(/pizza/i, (msg, match) => {
-  if(checkIfMinuteHasPassed()) {
+  if(checkCommandCooldown('pizza')) {
     botInstance.sendMessage(msg.chat.id, 'Coma pizza todo dia')
     
     timeLastCommandUsed = Date.now()
