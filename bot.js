@@ -36,11 +36,11 @@ db.connect(function (err) {
     db.get().createCollection('quotes')
     db.get().createCollection('timers')
     
-    // let timers = db.get().collection('timers')
-    db.timers.update({ commandCode: 'loli' }, {commandCode: 'loli', cooldownTime: 10}, {upsert: true})
-    db.timers.update({ commandCode: 'psx' }, {commandCode: 'psx', cooldownTime: 10}, {upsert: true})
-    db.timers.update({ commandCode: 'pizza' }, {commandCode: 'pizza', cooldownTime: 10}, {upsert: true})
-    db.timers.update({ commandCode: 'danbooru' }, {commandCode: 'danbooru', cooldownTime: 0}, {upsert: true})
+    let timers = db.get().collection('timers')
+    timers.update({ commandCode: 'loli' }, {commandCode: 'loli', cooldownTime: 10}, {upsert: true})
+    timers.update({ commandCode: 'psx' }, {commandCode: 'psx', cooldownTime: 10}, {upsert: true})
+    timers.update({ commandCode: 'pizza' }, {commandCode: 'pizza', cooldownTime: 10}, {upsert: true})
+    timers.update({ commandCode: 'danbooru' }, {commandCode: 'danbooru', cooldownTime: 0}, {upsert: true})
 })
 
 console.log('botInstance server started...')
