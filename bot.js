@@ -62,8 +62,10 @@ function checkCommandCooldown(commandCode) {
     let timers = db.get().collection('timers')
     let command = timers.findOne({ commandCode })
     
+    console.log(command)
+    
     if(checkIfMinutesHavePassed(command.lastTimeUsed, command.cooldownTime)) {
-      timers.update({commandCode}, {commandCode: command.commandCode, coolDownTime: command.commandCode, lastTimeUsed: Date.now()}, {upsert: true})
+      timers.update({commandCode}, {commandCode: commandCode, coolDownTime: command.cooldownTime, lastTimeUsed: Date.now()}, {upsert: true})
       return true
     }
   }
