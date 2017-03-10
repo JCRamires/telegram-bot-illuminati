@@ -60,14 +60,14 @@ function checkIfMinutesHavePassed(lastTimeUsed, minutes) {
 function checkCommandCooldown(commandCode) {
   if(checkIfMinutesHavePassed(timeLastCommandUsed, 1)) {
     let timers = db.get().collection('timers')
-    let command = timers.findOne({ commandCode })
-    
-    console.log(command)
-    
-    if(checkIfMinutesHavePassed(command.lastTimeUsed, command.cooldownTime)) {
-      timers.update({commandCode}, {commandCode: commandCode, coolDownTime: command.cooldownTime, lastTimeUsed: Date.now()}, {upsert: true})
-      return true
-    }
+    timers.findOne({ commandCode }).then((command) => {
+      console.log(command)
+      
+      if(checkIfMinutesHavePassed(command.lastTimeUsed, command.cooldownTime)) {
+        timers.update({commandCode}, {commandCode: commandCode, coolDownTime: command.cooldownTime, lastTimeUsed: Date.now()}, {upsert: true})
+        return true
+      }
+    })
   }
   return false
 }
