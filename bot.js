@@ -13,11 +13,13 @@ let botInstance
 //   botInstance.setWebHook(process.env.WEB_ROOT + botInstance.token, './public.pem');
 // }
 // else {
-botInstance = new Tgfancy(token,
+botInstance = new Tgfancy(token, {
   tgfancy: {
-    polling: true
+    webSocket: true,
+    url: 'wss://telegram-websocket-bridge-qalwkrjzzs.now.sh',
+    autoOpen: true
   }
-);
+});
 botInstance.setWebHook('');
 // }
 
@@ -39,11 +41,11 @@ console.log('botInstance server started...')
 let timeLastCommandUsed
 
 function checkIfMinuteHasPassed() {
-  // if (timeLastCommandUsed != undefined) {
-  //   if (Math.floor((new Date() - timeLastCommandUsed)/60000) < 10) {
-  //     return false
-  //   }
-  // }
+  if (timeLastCommandUsed != undefined) {
+    if (Math.floor((new Date() - timeLastCommandUsed)/60000) < 10) {
+      return false
+    }
+  }
   
   return true
 }
