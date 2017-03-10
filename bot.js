@@ -15,10 +15,7 @@ let botInstance
 // else {
 botInstance = new Tgfancy(token,
   tgfancy: {
-    webSocket: {
-      url: 'wss://telegram-websocket-bridge-qalwkrjzzs.now.sh',
-      autoOpen: true
-    }
+    polling: true
   }
 );
 botInstance.setWebHook('');
@@ -42,11 +39,11 @@ console.log('botInstance server started...')
 let timeLastCommandUsed
 
 function checkIfMinuteHasPassed() {
-  if (timeLastCommandUsed != undefined) {
-    if (Math.floor((new Date() - timeLastCommandUsed)/60000) < 10) {
-      return false
-    }
-  }
+  // if (timeLastCommandUsed != undefined) {
+  //   if (Math.floor((new Date() - timeLastCommandUsed)/60000) < 10) {
+  //     return false
+  //   }
+  // }
   
   return true
 }
