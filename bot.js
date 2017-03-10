@@ -63,7 +63,7 @@ function checkCommandCooldown(commandCode) {
     let command = timers.findOne({ commandCode })
     
     if(checkIfMinutesHavePassed(command.lastTimeUsed, command.cooldownTime)) {
-      timers.update({commandCode}, {lastTimeUsed: Date.now()}, {upsert: true})
+      timers.update({commandCode}, {commandCode: command.commandCode, coolDownTime: command.commandCode, lastTimeUsed: Date.now()}, {upsert: true})
       return true
     }
   }
