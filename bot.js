@@ -4,7 +4,7 @@ const fs = require('fs')
 const danbooru = require('danbooru')
 const token = process.env.BOT_TOKEN
 
-const Bot = require('node-telegram-bot-api')
+const Tgfancy = require("tgfancy");
 let botInstance
 
 // if(process.env.NODE_ENV === 'production') {
@@ -13,7 +13,14 @@ let botInstance
 //   botInstance.setWebHook(process.env.WEB_ROOT + botInstance.token, './public.pem');
 // }
 // else {
-botInstance = new Bot(token, { polling: true });
+botInstance = new Tgfancy(token,
+  tgfancy: {
+    webSocket: {
+      url: 'wss://telegram-websocket-bridge-qalwkrjzzs.now.sh',
+      autoOpen: true
+    }
+  }
+);
 botInstance.setWebHook('');
 // }
 
