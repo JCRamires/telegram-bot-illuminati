@@ -42,8 +42,10 @@ console.log('botInstance server started...')
 let timeLastCommandUsed
 
 function checkIfMinuteHasPassed() {
-  if (Math.floor((new Date() - timeLastCommandUsed)/60000) < 10) {
-    return false
+  if (timeLastCommandUsed != undefined) {
+    if (Math.floor((new Date() - timeLastCommandUsed)/60000) < 10) {
+      return false
+    }
   }
   
   return true
