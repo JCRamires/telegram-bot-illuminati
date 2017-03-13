@@ -44,6 +44,7 @@ db.connect(function (err) {
     timers.update({ commandCode: 'pizza' }, {commandCode: 'pizza', cooldownTime: 10}, {upsert: true})
     timers.update({ commandCode: 'danbooru' }, {commandCode: 'danbooru', cooldownTime: 0}, {upsert: true})
     timers.update({ commandCode: 'tengu' }, {commandCode: 'tengu', cooldownTime: 0}, {upsert: true})
+    timers.update({ commandCode: 'korean' }, {commandCode: 'korean', cooldownTime: 0}, {upsert: true})
 })
 
 console.log('botInstance server started...')
@@ -158,6 +159,25 @@ botInstance.onText(/tengu/i, (msg, match) => {
   if(checkCommandCooldown('tengu')) {
     if (probability(20)) {
       botInstance.sendMessage(msg.chat.id, ':snake:')
+      
+      timeLastCommandUsed = Date.now()
+    }
+  }
+})
+
+botInstance.onText(/korean/i, (msg, match) => {
+  if(checkCommandCooldown('korean')) {
+    if (probability(20)) {
+      utils.getRandomInt(1,2)
+
+      switch (utils.getRandomInt(1,2)){
+          case 1:
+              botInstance.sendSticker(msg.chat.id, './stickers/anime_noose.webp', {'reply_to_message_id': msg.message_id})
+              break
+          case 2:
+              botInstance.sendSticker(msg.chat.id, './stickers/clorox.webp', {'reply_to_message_id': msg.message_id})
+              break
+      }
       
       timeLastCommandUsed = Date.now()
     }
