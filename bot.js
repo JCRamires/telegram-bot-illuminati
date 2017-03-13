@@ -15,9 +15,11 @@ let botInstance
 // else {
 botInstance = new Tgfancy(token, {
   tgfancy: {
-    webSocket: true,
-    url: 'wss://telegram-websocket-bridge-qalwkrjzzs.now.sh',
-    autoOpen: true
+    emojification: true,
+    webSocket: {
+      url: 'wss://telegram-websocket-bridge-qalwkrjzzs.now.sh',
+      autoOpen: true
+    }
   }
 });
 botInstance.setWebHook('');
@@ -41,6 +43,7 @@ db.connect(function (err) {
     timers.update({ commandCode: 'psx' }, {commandCode: 'psx', cooldownTime: 10}, {upsert: true})
     timers.update({ commandCode: 'pizza' }, {commandCode: 'pizza', cooldownTime: 10}, {upsert: true})
     timers.update({ commandCode: 'danbooru' }, {commandCode: 'danbooru', cooldownTime: 0}, {upsert: true})
+    timers.update({ commandCode: 'tengu' }, {commandCode: 'tengu', cooldownTime: 0}, {upsert: true})
 })
 
 console.log('botInstance server started...')
@@ -68,6 +71,10 @@ function checkCommandCooldown(commandCode) {
     }
   }
   return false
+}
+
+function probability(percentage) {
+  return Math.random() <= percentage/100
 }
 
 botInstance.onText(/^\/danbooru((\s\w+)+)$/i, (msg, match) => {
@@ -144,5 +151,15 @@ botInstance.onText(/pizza/i, (msg, match) => {
     botInstance.sendMessage(msg.chat.id, 'Coma pizza todo dia')
     
     timeLastCommandUsed = Date.now()
+  }
+})
+
+botInstance.onText(/tengu/i, (msg, match) => {
+  if(checkCommandCooldown('tengu')) {
+    if (probability(20)) {
+      botInstance.sendMessage(msg.chat.id, ':snake:')
+      
+      timeLastCommandUsed = Date.now()
+    }
   }
 })
