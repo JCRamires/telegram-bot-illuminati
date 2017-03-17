@@ -45,6 +45,7 @@ db.connect(function (err) {
     timers.update({ commandCode: 'danbooru' }, {commandCode: 'danbooru', cooldownTime: 0}, {upsert: true})
     timers.update({ commandCode: 'tengu' }, {commandCode: 'tengu', cooldownTime: 0}, {upsert: true})
     timers.update({ commandCode: 'korean' }, {commandCode: 'korean', cooldownTime: 0}, {upsert: true})
+    timers.update({ commandCode: 'waifuUgo' }, {commandCode: 'waifuUgo', cooldownTime: 60}, {upsert: true})
 })
 
 console.log('botInstance server started...')
@@ -160,7 +161,6 @@ botInstance.onText(/pizza/i, (msg, match) => {
 })
 
 botInstance.onText(/tengu/i, (msg, match) => {
-  console.log(msg)
   if(checkCommandCooldown('tengu')) {
     if (probability(20)) {
       botInstance.sendMessage(msg.chat.id, ':snake:')
@@ -183,6 +183,16 @@ botInstance.onText(/korean/i, (msg, match) => {
               botInstance.sendSticker(msg.chat.id, './stickers/clorox.webp', {'reply_to_message_id': msg.message_id})
               break
       }
+      
+      timeLastCommandUsed = Date.now()
+    }
+  }
+})
+
+botInstance.onText(/waifu/i, (msg, match) => {
+  if(msg.from.first_name.includes('Hugo')){
+    if(checkCommandCooldown('waifuUgo')) {
+      botInstance.sendMessage(msg.chat.id, 'Transou?', {'reply_to_message_id': msg.message_id})
       
       timeLastCommandUsed = Date.now()
     }
