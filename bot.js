@@ -160,6 +160,7 @@ botInstance.onText(/pizza/i, (msg, match) => {
 })
 
 botInstance.onText(/tengu/i, (msg, match) => {
+  console.log(msg)
   if(checkCommandCooldown('tengu')) {
     if (probability(20)) {
       botInstance.sendMessage(msg.chat.id, ':snake:')
