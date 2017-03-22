@@ -1,19 +1,22 @@
 {
-  "name": "telegram-bot",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "node .",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "body-parser": "^1.15.1",
-    "danbooru": "^1.4.8",
-    "express": "^4.13.4",
-    "mongodb": "^2.1.18",
-    "tgfancy": "^0.9.0"
-  }
+    "name": "telegram-bot",
+    "version": "1.0.0",
+    "engines": {
+        "node": "7.7.4"
+    },
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "node .",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.15.1",
+        "danbooru": "^1.4.8",
+        "express": "^4.13.4",
+        "mongodb": "^2.1.18",
+        "tgfancy": "^0.9.0"
+    }
 }
