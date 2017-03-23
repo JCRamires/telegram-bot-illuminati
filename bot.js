@@ -40,7 +40,7 @@ console.log('botInstance server started...')
 
 let timeLastCommandUsed
 
-function checkCommandCooldown(commandCode) {
+function checkCommandCooldown(commandCode, callback) {
     if (utils.checkIfMinutesHavePassed(timeLastCommandUsed, 1)) {
         const timers = db.get().collection('timers')
         timers.findOne({ commandCode }, (err, result) => {
@@ -54,12 +54,8 @@ function checkCommandCooldown(commandCode) {
                         lastTimeUsed: Date.now()
                     }, { upsert: true })
 
-                    console.log('true')
-                    return true
+                    callback()
                 }
-
-                console.log('false')
-                return false
             }
         })
     }
@@ -70,7 +66,7 @@ function probability(percentage) {
 }
 
 botInstance.onText(/^\/danbooru((\s\w+)+)$/i, (msg, match) => {
-    if (checkCommandCooldown('danbooru')) {
+    checkCommandCooldown('danbooru', () => {
         danbooru.search(match[1].trim(), (err, data) => {
             if (err) {
                 botInstance.sendMessage(msg.chat.id, 'Erro no servidor :<', { reply_to_message_id: msg.message_id })
@@ -82,11 +78,11 @@ botInstance.onText(/^\/danbooru((\s\w+)+)$/i, (msg, match) => {
         })
 
         timeLastCommandUsed = Date.now()
-    }
+    })
 })
 
 botInstance.onText(/loli/i, msg => {
-    if (checkCommandCooldown('loli')) {
+    checkCommandCooldown('loli', () => {
         utils.getRandomInt(1,2)
 
         switch (utils.getRandomInt(1,2)) {
@@ -99,41 +95,38 @@ botInstance.onText(/loli/i, msg => {
         }
 
         timeLastCommandUsed = Date.now()
-    }
+    })
 })
 
 botInstance.onText(/psx/i, msg => {
-    if (checkCommandCooldown('psx')) {
+    checkCommandCooldown('psx', () => {
         botInstance.sendSticker(msg.chat.id, './stickers/naoPerpetueErro.webp')
 
         timeLastCommandUsed = Date.now()
-    }
+    })
 })
 
 botInstance.onText(/pizza/i, msg => {
-    if (checkCommandCooldown('pizza')) {
-        console.log('pizza time')
+    checkCommandCooldown('pizza', () => {
         botInstance.sendMessage(msg.chat.id, 'Coma pizza todo dia')
 
         timeLastCommandUsed = Date.now()
-    } else {
-        console.log('erro pizza')
-    }
+    })
 })
 
 botInstance.onText(/tengu/i, msg => {
-    if (checkCommandCooldown('tengu')) {
-        if (probability(20)) {
+    checkCommandCooldown('tengu', () => {
+        if (probability(30)) {
             botInstance.sendMessage(msg.chat.id, ':snake:')
 
             timeLastCommandUsed = Date.now()
         }
-    }
+    })
 })
 
 botInstance.onText(/korean/i, msg => {
-    if (checkCommandCooldown('korean')) {
-        if (probability(20)) {
+    checkCommandCooldown('korean', () => {
+        if (probability(30)) {
             utils.getRandomInt(1,2)
 
             switch (utils.getRandomInt(1,2)) {
@@ -147,21 +140,32 @@ botInstance.onText(/korean/i, msg => {
 
             timeLastCommandUsed = Date.now()
         }
-    }
+    })
 })
 
 botInstance.onText(/waifu/i, msg => {
     if (msg.from.first_name.includes('Hugo')) {
-        if (checkCommandCooldown('waifuUgo')) {
+        checkCommandCooldown('waifuUgo', () => {
             botInstance.sendMessage(msg.chat.id, 'Transou?', { reply_to_message_id: msg.message_id })
 
             timeLastCommandUsed = Date.now()
-        }
+        })
     }
 })
 
-botInstance.onText(/!teste/i, msg => {
-    if (checkCommandCooldown('teste')) {
-        botInstance.sendMessage(msg.chat.id, 'TESTE', { reply_to_message_id: msg.message_id })
+botInstance.onText(/taiga/i, msg => {
+    if (msg.from.first_name.includes('Hugo')) {
+        checkCommandCooldown('waifuUgo', () => {
+            botInstance.sendMessage(msg.chat.id, 'Transou?', { reply_to_message_id: msg.message_id })
+
+            timeLastCommandUsed = Date.now()
+        })
     }
+})
+
+
+botInstance.onText(/!teste/i, msg => {
+    checkCommandCooldown('teste', () => {
+        botInstance.sendMessage(msg.chat.id, 'TESTE', { reply_to_message_id: msg.message_id })
+    })
 })
