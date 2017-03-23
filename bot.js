@@ -33,6 +33,7 @@ db.connect( err => {
     timers.update({ commandCode: 'tengu' }, { commandCode: 'tengu', cooldownTime: 0 }, { upsert: true })
     timers.update({ commandCode: 'korean' }, { commandCode: 'korean', cooldownTime: 0 }, { upsert: true })
     timers.update({ commandCode: 'waifuUgo' }, { commandCode: 'waifuUgo', cooldownTime: 60 }, { upsert: true })
+    timers.update({ commandCode: 'teste' }, { commandCode: 'teste', cooldownTime: 0 }, { upsert: true })
 })
 
 console.log('botInstance server started...')
@@ -42,17 +43,23 @@ let timeLastCommandUsed
 function checkCommandCooldown(commandCode) {
     if (checkIfMinutesHavePassed(timeLastCommandUsed, 1)) {
         const timers = db.get().collection('timers')
-        const command = timers.findOne({ commandCode })
+        timers.findOne({ commandCode }, (err, result) => {
+            if (err) {
+                console.log('erro na consulta')
+            } else {
+                console.log(result)
+            }
+        })
 
-        if (checkIfMinutesHavePassed(command.lastTimeUsed, command.cooldownTime)) {
-            timers.update({ commandCode }, {
-                commandCode,
-                coolDownTime: commandCode === 'danbooru' || commandCode === 'tengu' || commandCode === 'korean' ? 0 : 10,
-                lastTimeUsed: Date.now()
-            }, { upsert: true })
-
-            return true
-        }
+        // if (checkIfMinutesHavePassed(command.lastTimeUsed, command.cooldownTime)) {
+        //     timers.update({ commandCode }, {
+        //         commandCode,
+        //         coolDownTime: commandCode === 'danbooru' || commandCode === 'tengu' || commandCode === 'korean' ? 0 : 10,
+        //         lastTimeUsed: Date.now()
+        //     }, { upsert: true })
+        //
+        //     return true
+        // }
     }
 
     return false
@@ -147,5 +154,11 @@ botInstance.onText(/waifu/i, msg => {
 
             timeLastCommandUsed = Date.now()
         }
+    }
+})
+
+botInstance.onText(/!teste/i, msg => {
+    if (checkCommandCooldown('teste')) {
+        botInstance.sendMessage(msg.chat.id, 'TESTE', { reply_to_message_id: msg.message_id })
     }
 })
