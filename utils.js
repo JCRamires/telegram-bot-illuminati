@@ -3,6 +3,7 @@ exports.getRandomInt = function(min, max) {
 }
 
 exports.checkIfMinutesHavePassed = function(lastTimeUsed, minutes) {
+    console.log(lastTimeUsed, minutes)
     if (lastTimeUsed != undefined) {
         if (Math.floor((new Date() - lastTimeUsed) / 60000) < minutes) {
             return false

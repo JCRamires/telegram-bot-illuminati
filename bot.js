@@ -54,9 +54,11 @@ function checkCommandCooldown(commandCode) {
                         lastTimeUsed: Date.now()
                     }, { upsert: true })
 
+                    console.log('true')
                     return true
                 }
 
+                console.log('false')
                 return false
             }
         })
@@ -110,6 +112,7 @@ botInstance.onText(/psx/i, msg => {
 
 botInstance.onText(/pizza/i, msg => {
     if (checkCommandCooldown('pizza')) {
+        console.log('pizza time')
         botInstance.sendMessage(msg.chat.id, 'Coma pizza todo dia')
 
         timeLastCommandUsed = Date.now()
