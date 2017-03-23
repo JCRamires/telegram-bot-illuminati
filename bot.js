@@ -116,6 +116,8 @@ botInstance.onText(/pizza/i, msg => {
         botInstance.sendMessage(msg.chat.id, 'Coma pizza todo dia')
 
         timeLastCommandUsed = Date.now()
+    } else {
+        console.log('erro pizza')
     }
 })
 
