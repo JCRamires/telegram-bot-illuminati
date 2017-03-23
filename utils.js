@@ -1,8 +1,8 @@
-export function getRandomInt(min, max) {
+exports.getRandomInt = function(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
-export function checkIfMinutesHavePassed(lastTimeUsed, minutes) {
+exports.checkIfMinutesHavePassed = function(lastTimeUsed, minutes) {
     if (lastTimeUsed != undefined) {
         if (Math.floor((new Date() - lastTimeUsed) / 60000) < minutes) {
             return false

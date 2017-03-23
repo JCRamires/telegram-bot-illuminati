@@ -1,6 +1,6 @@
 const token = process.env.BOT_TOKEN
 
-import { getRandomInt, checkIfMinutesHavePassed } from 'utils'
+const utils = require('./utils')
 
 const danbooru = require('danbooru')
 const Tgfancy = require('tgfancy')
@@ -41,7 +41,7 @@ console.log('botInstance server started...')
 let timeLastCommandUsed
 
 function checkCommandCooldown(commandCode) {
-    if (checkIfMinutesHavePassed(timeLastCommandUsed, 1)) {
+    if (utils.checkIfMinutesHavePassed(timeLastCommandUsed, 1)) {
         const timers = db.get().collection('timers')
         timers.findOne({ commandCode }, (err, result) => {
             if (err) {
@@ -87,9 +87,9 @@ botInstance.onText(/^\/danbooru((\s\w+)+)$/i, (msg, match) => {
 
 botInstance.onText(/loli/i, msg => {
     if (checkCommandCooldown('loli')) {
-        getRandomInt(1,2)
+        utils.getRandomInt(1,2)
 
-        switch (getRandomInt(1,2)) {
+        switch (utils.getRandomInt(1,2)) {
             case 1:
                 botInstance.sendSticker(msg.chat.id, './stickers/cocabird.webp', { reply_to_message_id: msg.message_id })
                 break
@@ -131,9 +131,9 @@ botInstance.onText(/tengu/i, msg => {
 botInstance.onText(/korean/i, msg => {
     if (checkCommandCooldown('korean')) {
         if (probability(20)) {
-            getRandomInt(1,2)
+            utils.getRandomInt(1,2)
 
-            switch (getRandomInt(1,2)) {
+            switch (utils.getRandomInt(1,2)) {
                 case 1:
                     botInstance.sendSticker(msg.chat.id, './stickers/anime_noose.webp', { reply_to_message_id: msg.message_id })
                     break
