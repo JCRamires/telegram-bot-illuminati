@@ -53,18 +53,14 @@ function checkCommandCooldown(commandCode) {
                         cooldownTime: result.cooldownTime,
                         lastTimeUsed: Date.now()
                     }, { upsert: true })
+
+                    return true
                 }
 
-                console.log('true')
-
-                return true
+                return false
             }
         })
     }
-
-    console.log('false')
-
-    return false
 }
 
 function probability(percentage) {
