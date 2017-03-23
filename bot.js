@@ -47,20 +47,22 @@ function checkCommandCooldown(commandCode) {
             if (err) {
                 console.log('erro na consulta')
             } else {
-                console.log(result)
+                if (utils.checkIfMinutesHavePassed(result.lastTimeUsed, result.cooldownTime)) {
+                    timers.update({ commandCode }, {
+                        commandCode,
+                        cooldownTime: result.cooldownTime,
+                        lastTimeUsed: Date.now()
+                    }, { upsert: true })
+                }
+
+                console.log('true')
+
+                return true
             }
         })
-
-        // if (checkIfMinutesHavePassed(command.lastTimeUsed, command.cooldownTime)) {
-        //     timers.update({ commandCode }, {
-        //         commandCode,
-        //         coolDownTime: commandCode === 'danbooru' || commandCode === 'tengu' || commandCode === 'korean' ? 0 : 10,
-        //         lastTimeUsed: Date.now()
-        //     }, { upsert: true })
-        //
-        //     return true
-        // }
     }
+
+    console.log('false')
 
     return false
 }
