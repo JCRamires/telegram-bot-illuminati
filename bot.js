@@ -70,7 +70,10 @@ botInstance.onText(/^\/danbooru((\s\w+)+)$/i, (msg, match) => {
             botInstance.sendMessage(msg.chat.id, 'Erro no servidor :<', { reply_to_message_id: msg.message_id })
         } else {
             if (data.random()) {
-                botInstance.sendMessage(msg.chat.id, `http://danbooru.donmai.us${data.random().file_url}`)
+                const imgUrl = data.random().file_url
+                if (imgUrl) {
+                    botInstance.sendPhoto(msg.chat.id, `http://danbooru.donmai.us${imgUrl}`)
+                }
             }
         }
     })
