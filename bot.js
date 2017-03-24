@@ -112,7 +112,7 @@ botInstance.onText(/nojo/i, msg => {
     checkCommandCooldown('nojo', () => {
         botInstance.sendDocument(msg.chat.id, './imagens/nojo.png', { reply_to_message_id: msg.message_id })
 
-        timeLastCommandUsed = Date.now()
+       
     })
 })
 
