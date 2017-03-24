@@ -67,15 +67,15 @@ function probability(percentage) {
 }
 
 botInstance.onText(/^\/danbooru((\s\w+)+)$/i, (msg, match) => {
-    danbooru.search(match[1].trim(), (err, data) => {
+    const searchTerm = match[1].trim()
+    danbooru.search(searchTerm, (err, data) => {
         if (err) {
             botInstance.sendMessage(msg.chat.id, 'Erro no servidor :<', { reply_to_message_id: msg.message_id })
         } else {
             const randomImage = data.random()
             if (randomImage) {
-                randomImage.getLarge((err, response, body) => {
-                    botInstance.sendPhoto(msg.chat.id, fs.createReadStream(body))
-                })
+                randomImage.getLarge().pipe(fs.createWriteStream(`/tmp/${searchTerm}`))
+                botInstance.sendPhoto(msg.chat.id, fs.createReadStream(`/tmp/${searchTerm}`))
             }
         }
     })
