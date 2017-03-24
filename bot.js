@@ -74,8 +74,11 @@ botInstance.onText(/^\/danbooru((\s\w+)+)$/i, (msg, match) => {
         } else {
             const randomImage = data.random()
             if (randomImage) {
-                randomImage.getLarge().pipe(fs.createWriteStream(`/tmp/${searchTerm}`))
-                botInstance.sendPhoto(msg.chat.id, fs.createReadStream(`/tmp/${searchTerm}`))
+                console.log(randomImage)
+                // const imgUrl = data.random().file_url
+                // if (imgUrl) {
+                //     botInstance.sendPhoto(msg.chat.id, `http://danbooru.donmai.us${imgUrl}`)
+                // }
             }
         }
     })
