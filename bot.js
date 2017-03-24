@@ -108,6 +108,14 @@ botInstance.onText(/psx/i, msg => {
     })
 })
 
+botInstance.onText(/nojo/i, msg => {
+    checkCommandCooldown('nojo', () => {
+        botInstance.sendSticker(msg.chat.id, './imagens/nojo.png')
+
+        timeLastCommandUsed = Date.now()
+    })
+})
+
 botInstance.onText(/pizza/i, msg => {
     checkCommandCooldown('pizza', () => {
         botInstance.sendMessage(msg.chat.id, 'Coma pizza todo dia')
