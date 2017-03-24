@@ -66,15 +66,13 @@ function probability(percentage) {
 }
 
 botInstance.onText(/^\/danbooru((\s\w+)+)$/i, (msg, match) => {
-    console.log('danbooru')
     checkCommandCooldown('danbooru', () => {
         danbooru.search(match[1].trim(), (err, data) => {
-            console.log(err, data)
             if (err) {
                 botInstance.sendMessage(msg.chat.id, 'Erro no servidor :<', { reply_to_message_id: msg.message_id })
             } else {
                 if (data.random()) {
-                    botInstance.sendMessage(msg.chat.id, data.random().source)
+                    botInstance.sendMessage(msg.chat.id, `http://danbooru.donmai.us${data.random().file_url}`)
                 }
             }
         })
