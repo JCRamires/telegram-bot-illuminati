@@ -35,6 +35,7 @@ db.connect( err => {
     timers.update({ commandCode: 'korean' }, { commandCode: 'korean', cooldownTime: 0 }, { upsert: true })
     timers.update({ commandCode: 'waifuUgo' }, { commandCode: 'waifuUgo', cooldownTime: 60 }, { upsert: true })
     timers.update({ commandCode: 'nojo' }, { commandCode: 'nojo', cooldownTime: 10 }, { upsert: true })
+    timers.update({ commandCode: 'dota' }, { commandCode: 'dota', cooldownTime: 10 }, { upsert: true })
     timers.update({ commandCode: 'teste' }, { commandCode: 'teste', cooldownTime: 0 }, { upsert: true })
 })
 
@@ -120,6 +121,14 @@ botInstance.onText(/nojo/i, msg => {
 botInstance.onText(/pizza/i, msg => {
     checkCommandCooldown('pizza', () => {
         botInstance.sendMessage(msg.chat.id, 'Coma pizza todo dia')
+
+        timeLastCommandUsed = Date.now()
+    })
+})
+
+botInstance.onText(/dota/i, msg => {
+    checkCommandCooldown('dota', () => {
+        botInstance.sendMessage(msg.chat.id, 'Dota é sempre um erro')
 
         timeLastCommandUsed = Date.now()
     })
