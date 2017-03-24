@@ -110,7 +110,7 @@ botInstance.onText(/psx/i, msg => {
 
 botInstance.onText(/nojo/i, msg => {
     checkCommandCooldown('nojo', () => {
-        botInstance.sendSticker(msg.chat.id, './imagens/nojo.gif')
+        botInstance.sendDocument(msg.chat.id, './imagens/nojo.png', { reply_to_message_id: msg.message_id })
 
         timeLastCommandUsed = Date.now()
     })
