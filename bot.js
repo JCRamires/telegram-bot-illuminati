@@ -34,6 +34,7 @@ db.connect( err => {
     timers.update({ commandCode: 'tengu' }, { commandCode: 'tengu', cooldownTime: 0 }, { upsert: true })
     timers.update({ commandCode: 'korean' }, { commandCode: 'korean', cooldownTime: 0 }, { upsert: true })
     timers.update({ commandCode: 'waifuUgo' }, { commandCode: 'waifuUgo', cooldownTime: 60 }, { upsert: true })
+    timers.update({ commandCode: 'nojo' }, { commandCode: 'nojo', cooldownTime: 10 }, { upsert: true })
     timers.update({ commandCode: 'teste' }, { commandCode: 'teste', cooldownTime: 0 }, { upsert: true })
 })
 
@@ -112,7 +113,7 @@ botInstance.onText(/nojo/i, msg => {
     checkCommandCooldown('nojo', () => {
         botInstance.sendDocument(msg.chat.id, './imagens/nojo.png', { reply_to_message_id: msg.message_id })
 
-       
+
     })
 })
 
