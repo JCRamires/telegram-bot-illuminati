@@ -29,7 +29,6 @@ db.connect( err => {
     timers.update({ commandCode: 'loli' }, { commandCode: 'loli', cooldownTime: 10 }, { upsert: true })
     timers.update({ commandCode: 'psx' }, { commandCode: 'psx', cooldownTime: 10 }, { upsert: true })
     timers.update({ commandCode: 'pizza' }, { commandCode: 'pizza', cooldownTime: 10 }, { upsert: true })
-    timers.update({ commandCode: 'danbooru' }, { commandCode: 'danbooru', cooldownTime: 0 }, { upsert: true })
     timers.update({ commandCode: 'tengu' }, { commandCode: 'tengu', cooldownTime: 0 }, { upsert: true })
     timers.update({ commandCode: 'korean' }, { commandCode: 'korean', cooldownTime: 0 }, { upsert: true })
     timers.update({ commandCode: 'waifuUgo' }, { commandCode: 'waifuUgo', cooldownTime: 60 }, { upsert: true })
@@ -66,18 +65,14 @@ function probability(percentage) {
 }
 
 botInstance.onText(/^\/danbooru((\s\w+)+)$/i, (msg, match) => {
-    checkCommandCooldown('danbooru', () => {
-        danbooru.search(match[1].trim(), (err, data) => {
-            if (err) {
-                botInstance.sendMessage(msg.chat.id, 'Erro no servidor :<', { reply_to_message_id: msg.message_id })
-            } else {
-                if (data.random()) {
-                    botInstance.sendMessage(msg.chat.id, `http://danbooru.donmai.us${data.random().file_url}`)
-                }
+    danbooru.search(match[1].trim(), (err, data) => {
+        if (err) {
+            botInstance.sendMessage(msg.chat.id, 'Erro no servidor :<', { reply_to_message_id: msg.message_id })
+        } else {
+            if (data.random()) {
+                botInstance.sendMessage(msg.chat.id, `http://danbooru.donmai.us${data.random().file_url}`)
             }
-        })
-
-        timeLastCommandUsed = Date.now()
+        }
     })
 })
 
@@ -162,7 +157,6 @@ botInstance.onText(/taiga/i, msg => {
         })
     }
 })
-
 
 botInstance.onText(/!teste/i, msg => {
     checkCommandCooldown('teste', () => {
