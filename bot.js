@@ -1,5 +1,7 @@
 const token = process.env.BOT_TOKEN
 
+const fs = require('fs')
+
 const utils = require('./utils')
 
 const danbooru = require('danbooru')
@@ -69,11 +71,19 @@ botInstance.onText(/^\/danbooru((\s\w+)+)$/i, (msg, match) => {
         if (err) {
             botInstance.sendMessage(msg.chat.id, 'Erro no servidor :<', { reply_to_message_id: msg.message_id })
         } else {
-            if (data.random()) {
-                const imgUrl = data.random().file_url
-                if (imgUrl) {
-                    botInstance.sendPhoto(msg.chat.id, `http://danbooru.donmai.us${imgUrl}`)
-                }
+            const randomImage = data.random()
+            if (randomImage) {
+                randomImage.getLarge((err, response, body) => {
+                    console.log(body)
+                })
+                // botInstance.sendPhoto(msg.chat.id, randomImage.getLarge())
+                // randomImage.getLarge( => {
+                //     botInstance.sendPhoto(msg.chat.id, `http://danbooru.donmai.us${imgUrl}`)
+                // })
+                // const imgUrl = drandomImage.file_url
+                // if (imgUrl) {
+                //     botInstance.sendPhoto(msg.chat.id, )
+                // }
             }
         }
     })
