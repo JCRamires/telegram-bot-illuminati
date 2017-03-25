@@ -1,19 +1,14 @@
 const token = process.env.BOT_TOKEN
 
-const fs = require('fs')
-
 const utils = require('./utils')
 
 const danbooru = require('danbooru')
 const Tgfancy = require('tgfancy')
 
 const botInstance = new Tgfancy(token, {
+    polling: true,
     tgfancy: {
-        emojification: true,
-        webSocket: {
-            url: 'wss://telegram-websocket-bridge-qalwkrjzzs.now.sh',
-            autoOpen: true
-        }
+        emojification: true
     }
 })
 
