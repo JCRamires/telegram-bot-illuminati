@@ -30,7 +30,7 @@ db.connect( err => {
     timers.update({ commandCode: 'korean' }, { commandCode: 'korean', cooldownTime: 0 }, { upsert: true })
     timers.update({ commandCode: 'waifuUgo' }, { commandCode: 'waifuUgo', cooldownTime: 60 }, { upsert: true })
     timers.update({ commandCode: 'nojo' }, { commandCode: 'nojo', cooldownTime: 10 }, { upsert: true })
-    timers.update({ commandCode: 'dota' }, { commandCode: 'dota', cooldownTime: 10 }, { upsert: true })
+    timers.update({ commandCode: 'dota' }, { commandCode: 'dota', cooldownTime: 60 }, { upsert: true })
     timers.update({ commandCode: 'teste' }, { commandCode: 'teste', cooldownTime: 0 }, { upsert: true })
 })
 
