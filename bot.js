@@ -122,12 +122,17 @@ botInstance.onText(/pizza/i, msg => {
 })
 
 botInstance.onText(/dota/i, msg => {
-    checkCommandCooldown('dota', () => {
+        checkCommandCooldown('dota', () => {
+            if (probability(30)) {
         botInstance.sendMessage(msg.chat.id, 'Dota é sempre um erro')
 
+
+            }
         timeLastCommandUsed = Date.now()
     })
 })
+
+
 
 botInstance.onText(/tengu/i, msg => {
     checkCommandCooldown('tengu', () => {
