@@ -54,18 +54,20 @@ botInstance.onText(/^\/danbooru((\s\w+)+)$/i, (msg, match) => {
 })
 
 botInstance.onText(/loli/i, msg => {
-    utils.checkCommandCooldown('loli', db, () => {
-        switch (utils.getRandomInt(1,2)) {
-            case 1:
-                botInstance.sendSticker(msg.chat.id, './stickers/cocabird.webp', { reply_to_message_id: msg.message_id })
-                break
-            case 2:
-                botInstance.sendDocument(msg.chat.id, './imagens/policecar.gif', { reply_to_message_id: msg.message_id })
-                break
-        }
+    if (utils.probability(30)) {
+        utils.checkCommandCooldown('loli', db, () => {
+            switch (utils.getRandomInt(1,2)) {
+                case 1:
+                    botInstance.sendSticker(msg.chat.id, './stickers/cocabird.webp', { reply_to_message_id: msg.message_id })
+                    break
+                case 2:
+                    botInstance.sendDocument(msg.chat.id, './imagens/policecar.gif', { reply_to_message_id: msg.message_id })
+                    break
+            }
 
-        utils.setTimeLastCommandUsed()
-    })
+            utils.setTimeLastCommandUsed()
+        })
+    }
 })
 
 botInstance.onText(/psx/i, msg => {
@@ -76,21 +78,25 @@ botInstance.onText(/psx/i, msg => {
 })
 
 botInstance.onText(/nojo/i, msg => {
-    utils.checkCommandCooldown('nojo', db, () => {
-        botInstance.sendPhoto(msg.chat.id, './imagens/nojo.png', { reply_to_message_id: msg.message_id })
-        utils.setTimeLastCommandUsed()
-    })
+    if (utils.probability(30)) {
+        utils.checkCommandCooldown('nojo', db, () => {
+            botInstance.sendPhoto(msg.chat.id, './imagens/nojo.png', { reply_to_message_id: msg.message_id })
+            utils.setTimeLastCommandUsed()
+        })
+    }
 })
 
 botInstance.onText(/pizza/i, msg => {
-    utils.checkCommandCooldown('pizza', db, () => {
-        botInstance.sendMessage(msg.chat.id, 'Coma pizza todo dia')
-        utils.setTimeLastCommandUsed()
-    })
+    if (utils.probability(30)) {
+        utils.checkCommandCooldown('pizza', db, () => {
+            botInstance.sendMessage(msg.chat.id, 'Coma pizza todo dia')
+            utils.setTimeLastCommandUsed()
+        })
+    }
 })
 
 botInstance.onText(/dota/i, msg => {
-    if (utils.probability(30)) {
+    if (utils.probability(17)) {
         utils.checkCommandCooldown('dota', db, () => {
             botInstance.sendMessage(msg.chat.id, 'Dota é sempre um erro')
             utils.setTimeLastCommandUsed()
@@ -108,7 +114,7 @@ botInstance.onText(/tengu/i, msg => {
 })
 
 function koreanResponse(msg) {
-    if (utils.probability(40)) {
+    if (utils.probability(30)) {
         utils.checkCommandCooldown('korean', db, () => {
             switch (utils.getRandomInt(1,4)) {
                 case 1:
