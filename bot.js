@@ -108,14 +108,20 @@ botInstance.onText(/tengu/i, msg => {
 })
 
 function koreanResponse(msg) {
-    if (utils.probability(30)) {
+    if (utils.probability(40)) {
         utils.checkCommandCooldown('korean', db, () => {
-            switch (utils.getRandomInt(1,2)) {
+            switch (utils.getRandomInt(1,4)) {
                 case 1:
                     botInstance.sendSticker(msg.chat.id, './stickers/anime_noose.webp', { reply_to_message_id: msg.message_id })
                     break
                 case 2:
                     botInstance.sendSticker(msg.chat.id, './stickers/clorox.webp', { reply_to_message_id: msg.message_id })
+                    break
+                case 3:
+                    botInstance.sendSticker(msg.chat.id, './stickers/fagDetected.webp', { reply_to_message_id: msg.message_id })
+                    break
+                case 4:
+                    botInstance.sendSticker(msg.chat.id, './stickers/chegouAViciadaEmMacho.webp', { reply_to_message_id: msg.message_id })
                     break
             }
             utils.settimeLastCommandUsed()
