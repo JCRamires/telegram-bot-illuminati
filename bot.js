@@ -64,28 +64,28 @@ botInstance.onText(/loli/i, msg => {
                 break
         }
 
-        utils.settimeLastCommandUsed()
+        utils.setTimeLastCommandUsed()
     })
 })
 
 botInstance.onText(/psx/i, msg => {
     utils.checkCommandCooldown('psx', db, () => {
         botInstance.sendSticker(msg.chat.id, './stickers/naoPerpetueErro.webp')
-        utils.settimeLastCommandUsed()
+        utils.setTimeLastCommandUsed()
     })
 })
 
 botInstance.onText(/nojo/i, msg => {
     utils.checkCommandCooldown('nojo', db, () => {
         botInstance.sendPhoto(msg.chat.id, './imagens/nojo.png', { reply_to_message_id: msg.message_id })
-        utils.settimeLastCommandUsed()
+        utils.setTimeLastCommandUsed()
     })
 })
 
 botInstance.onText(/pizza/i, msg => {
     utils.checkCommandCooldown('pizza', db, () => {
         botInstance.sendMessage(msg.chat.id, 'Coma pizza todo dia')
-        utils.settimeLastCommandUsed
+        utils.setTimeLastCommandUsed()
     })
 })
 
@@ -93,7 +93,7 @@ botInstance.onText(/dota/i, msg => {
     if (utils.probability(30)) {
         utils.checkCommandCooldown('dota', db, () => {
             botInstance.sendMessage(msg.chat.id, 'Dota é sempre um erro')
-            utils.settimeLastCommandUsed()
+            utils.setTimeLastCommandUsed()
         })
     }
 })
@@ -102,7 +102,7 @@ botInstance.onText(/tengu/i, msg => {
     if (utils.probability(30)) {
         utils.checkCommandCooldown('tengu', db, () => {
             botInstance.sendMessage(msg.chat.id, ':snake:')
-            utils.settimeLastCommandUsed()
+            utils.setTimeLastCommandUsed()
         })
     }
 })
@@ -124,7 +124,7 @@ function koreanResponse(msg) {
                     botInstance.sendSticker(msg.chat.id, './stickers/chegouAViciadaEmMacho.webp', { reply_to_message_id: msg.message_id })
                     break
             }
-            utils.settimeLastCommandUsed()
+            utils.setTimeLastCommandUsed()
         })
     }
 }
@@ -141,7 +141,7 @@ function hugoResponse(msg) {
     if (msg.from.first_name.includes('Hugo')) {
         utils.checkCommandCooldown('waifuUgo', db, () => {
             botInstance.sendMessage(msg.chat.id, 'Transou?', { reply_to_message_id: msg.message_id })
-            utils.settimeLastCommandUsed()
+            utils.setTimeLastCommandUsed()
         })
     }
 }
