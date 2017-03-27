@@ -90,26 +90,26 @@ botInstance.onText(/pizza/i, msg => {
 })
 
 botInstance.onText(/dota/i, msg => {
-    utils.checkCommandCooldown('dota', db, () => {
-        if (utils.probability(30)) {
+    if (utils.probability(30)) {
+        utils.checkCommandCooldown('dota', db, () => {
             botInstance.sendMessage(msg.chat.id, 'Dota é sempre um erro')
             utils.settimeLastCommandUsed()
-        }
-    })
+        })
+    }
 })
 
 botInstance.onText(/tengu/i, msg => {
-    utils.checkCommandCooldown('tengu', db, () => {
-        if (utils.probability(30)) {
+    if (utils.probability(30)) {
+        utils.checkCommandCooldown('tengu', db, () => {
             botInstance.sendMessage(msg.chat.id, ':snake:')
             utils.settimeLastCommandUsed()
-        }
-    })
+        })
+    }
 })
 
-botInstance.onText(/korean/i, msg => {
-    utils.checkCommandCooldown('korean', db, () => {
-        if (utils.probability(30)) {
+function koreanResponse(msg) {
+    if (utils.probability(30)) {
+        utils.checkCommandCooldown('korean', db, () => {
             switch (utils.getRandomInt(1,2)) {
                 case 1:
                     botInstance.sendSticker(msg.chat.id, './stickers/anime_noose.webp', { reply_to_message_id: msg.message_id })
@@ -119,26 +119,33 @@ botInstance.onText(/korean/i, msg => {
                     break
             }
             utils.settimeLastCommandUsed()
-        }
-    })
+        })
+    }
+}
+
+botInstance.onText(/korean/i, msg => {
+    koreanResponse(msg)
 })
 
-botInstance.onText(/waifu/i, msg => {
+botInstance.onText(/coreano/i, msg => {
+    koreanResponse(msg)
+})
+
+function hugoResponse(msg) {
     if (msg.from.first_name.includes('Hugo')) {
         utils.checkCommandCooldown('waifuUgo', db, () => {
             botInstance.sendMessage(msg.chat.id, 'Transou?', { reply_to_message_id: msg.message_id })
             utils.settimeLastCommandUsed()
         })
     }
+}
+
+botInstance.onText(/waifu/i, msg => {
+    hugoResponse(msg)
 })
 
 botInstance.onText(/taiga/i, msg => {
-    if (msg.from.first_name.includes('Hugo')) {
-        utils.checkCommandCooldown('waifuUgo', db, () => {
-            botInstance.sendMessage(msg.chat.id, 'Transou?', { reply_to_message_id: msg.message_id })
-            utils.settimeLastCommandUsed()
-        })
-    }
+    hugoResponse(msg)
 })
 
 botInstance.onText(/!teste/i, msg => {
