@@ -36,29 +36,6 @@ db.connect( err => {
 
 console.log('botInstance server started...')
 
-let timeLastCommandUsed
-
-function checkCommandCooldown(commandCode, callback) {
-    if (utils.checkIfMinutesHavePassed(timeLastCommandUsed, 1)) {
-        const timers = db.get().collection('timers')
-        timers.findOne({ commandCode }, (err, result) => {
-            if (err) {
-                console.log('erro na consulta')
-            } else {
-                if (utils.checkIfMinutesHavePassed(result.lastTimeUsed, result.cooldownTime)) {
-                    timers.update({ commandCode }, {
-                        commandCode,
-                        cooldownTime: result.cooldownTime,
-                        lastTimeUsed: Date.now()
-                    }, { upsert: true })
-
-                    callback()
-                }
-            }
-        })
-    }
-}
-
 botInstance.onText(/^\/danbooru((\s\w+)+)$/i, (msg, match) => {
     const searchTerm = match[1].trim()
     danbooru.search(searchTerm, (err, data) => {
@@ -77,9 +54,7 @@ botInstance.onText(/^\/danbooru((\s\w+)+)$/i, (msg, match) => {
 })
 
 botInstance.onText(/loli/i, msg => {
-    checkCommandCooldown('loli', () => {
-        utils.getRandomInt(1,2)
-
+    utils.checkCommandCooldown('loli', db, () => {
         switch (utils.getRandomInt(1,2)) {
             case 1:
                 botInstance.sendSticker(msg.chat.id, './stickers/cocabird.webp', { reply_to_message_id: msg.message_id })
@@ -89,39 +64,36 @@ botInstance.onText(/loli/i, msg => {
                 break
         }
 
-        timeLastCommandUsed = Date.now()
+        utils.settimeLastCommandUsed()
     })
 })
 
 botInstance.onText(/psx/i, msg => {
-    checkCommandCooldown('psx', () => {
+    utils.checkCommandCooldown('psx', db, () => {
         botInstance.sendSticker(msg.chat.id, './stickers/naoPerpetueErro.webp')
-
-        timeLastCommandUsed = Date.now()
+        utils.settimeLastCommandUsed()
     })
 })
 
 botInstance.onText(/nojo/i, msg => {
-    checkCommandCooldown('nojo', () => {
+    utils.checkCommandCooldown('nojo', db, () => {
         botInstance.sendPhoto(msg.chat.id, './imagens/nojo.png', { reply_to_message_id: msg.message_id })
-
-
+        utils.settimeLastCommandUsed()
     })
 })
 
 botInstance.onText(/pizza/i, msg => {
-    checkCommandCooldown('pizza', () => {
+    utils.checkCommandCooldown('pizza', db, () => {
         botInstance.sendMessage(msg.chat.id, 'Coma pizza todo dia')
-
-        timeLastCommandUsed = Date.now()
+        utils.settimeLastCommandUsed
     })
 })
 
 botInstance.onText(/dota/i, msg => {
-    checkCommandCooldown('dota', () => {
+    utils.checkCommandCooldown('dota', db, () => {
         if (utils.probability(30)) {
             botInstance.sendMessage(msg.chat.id, 'Dota é sempre um erro')
-            timeLastCommandUsed = Date.now()
+            utils.settimeLastCommandUsed()
         }
     })
 })
@@ -129,20 +101,17 @@ botInstance.onText(/dota/i, msg => {
 
 
 botInstance.onText(/tengu/i, msg => {
-    checkCommandCooldown('tengu', () => {
+    utils.checkCommandCooldown('tengu', db, () => {
         if (utils.probability(30)) {
             botInstance.sendMessage(msg.chat.id, ':snake:')
-
-            timeLastCommandUsed = Date.now()
+            utils.settimeLastCommandUsed()
         }
     })
 })
 
 botInstance.onText(/korean/i, msg => {
-    checkCommandCooldown('korean', () => {
+    utils.checkCommandCooldown('korean', db, () => {
         if (utils.probability(30)) {
-            utils.getRandomInt(1,2)
-
             switch (utils.getRandomInt(1,2)) {
                 case 1:
                     botInstance.sendSticker(msg.chat.id, './stickers/anime_noose.webp', { reply_to_message_id: msg.message_id })
@@ -151,34 +120,31 @@ botInstance.onText(/korean/i, msg => {
                     botInstance.sendSticker(msg.chat.id, './stickers/clorox.webp', { reply_to_message_id: msg.message_id })
                     break
             }
-
-            timeLastCommandUsed = Date.now()
+            utils.settimeLastCommandUsed()
         }
     })
 })
 
 botInstance.onText(/waifu/i, msg => {
     if (msg.from.first_name.includes('Hugo')) {
-        checkCommandCooldown('waifuUgo', () => {
+        utils.checkCommandCooldown('waifuUgo', db, () => {
             botInstance.sendMessage(msg.chat.id, 'Transou?', { reply_to_message_id: msg.message_id })
-
-            timeLastCommandUsed = Date.now()
+            utils.settimeLastCommandUsed()
         })
     }
 })
 
 botInstance.onText(/taiga/i, msg => {
     if (msg.from.first_name.includes('Hugo')) {
-        checkCommandCooldown('waifuUgo', () => {
+        utils.checkCommandCooldown('waifuUgo', db, () => {
             botInstance.sendMessage(msg.chat.id, 'Transou?', { reply_to_message_id: msg.message_id })
-
-            timeLastCommandUsed = Date.now()
+            utils.settimeLastCommandUsed()
         })
     }
 })
 
 botInstance.onText(/!teste/i, msg => {
-    checkCommandCooldown('teste', () => {
+    utils.checkCommandCooldown('teste', db, () => {
         botInstance.sendMessage(msg.chat.id, 'TESTE', { reply_to_message_id: msg.message_id })
     })
 })
