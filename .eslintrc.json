@@ -40,6 +40,7 @@
         "object-curly-spacing": [2, "always"],
         "array-bracket-spacing": 2,
         "comma-dangle": 2,
-        "no-console": 0
+        "no-console": 0,
+        "no-multiple-empty-lines": [2, { "max": 1 }]
     }
 }

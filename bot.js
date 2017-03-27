@@ -98,8 +98,6 @@ botInstance.onText(/dota/i, msg => {
     })
 })
 
-
-
 botInstance.onText(/tengu/i, msg => {
     utils.checkCommandCooldown('tengu', db, () => {
         if (utils.probability(30)) {
