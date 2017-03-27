@@ -59,10 +59,6 @@ function checkCommandCooldown(commandCode, callback) {
     }
 }
 
-function probability(percentage) {
-    return Math.random() <= percentage / 100
-}
-
 botInstance.onText(/^\/danbooru((\s\w+)+)$/i, (msg, match) => {
     const searchTerm = match[1].trim()
     danbooru.search(searchTerm, (err, data) => {
@@ -122,13 +118,11 @@ botInstance.onText(/pizza/i, msg => {
 })
 
 botInstance.onText(/dota/i, msg => {
-        checkCommandCooldown('dota', () => {
-            if (probability(30)) {
-        botInstance.sendMessage(msg.chat.id, 'Dota é sempre um erro')
-
-
-            }
-        timeLastCommandUsed = Date.now()
+    checkCommandCooldown('dota', () => {
+        if (utils.probability(30)) {
+            botInstance.sendMessage(msg.chat.id, 'Dota é sempre um erro')
+            timeLastCommandUsed = Date.now()
+        }
     })
 })
 
@@ -136,7 +130,7 @@ botInstance.onText(/dota/i, msg => {
 
 botInstance.onText(/tengu/i, msg => {
     checkCommandCooldown('tengu', () => {
-        if (probability(30)) {
+        if (utils.probability(30)) {
             botInstance.sendMessage(msg.chat.id, ':snake:')
 
             timeLastCommandUsed = Date.now()
@@ -146,7 +140,7 @@ botInstance.onText(/tengu/i, msg => {
 
 botInstance.onText(/korean/i, msg => {
     checkCommandCooldown('korean', () => {
-        if (probability(30)) {
+        if (utils.probability(30)) {
             utils.getRandomInt(1,2)
 
             switch (utils.getRandomInt(1,2)) {

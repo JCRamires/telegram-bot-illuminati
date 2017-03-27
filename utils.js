@@ -11,3 +11,5 @@ exports.checkIfMinutesHavePassed = function(lastTimeUsed, minutes) {
 
     return true
 }
+
+exports.probability = percentage => Math.random() <= percentage / 100
