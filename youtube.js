@@ -38,7 +38,10 @@ function getStatusMongolice() {
         let data = ''
         result.on('error', err => console.log(err))
         result.on('data', data_ => data += data_)
-        result.on('end', () => response = JSON.parse(data))
+        result.on('end', () => {
+            console.log(data)
+            response = JSON.parse(data)
+        })
     })
 
     return response
