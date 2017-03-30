@@ -34,11 +34,11 @@ const configStatusMongolices = {
 }
 function getStatusMongolice() {
     let response
-    https.get(`https://www.googleapis.com/youtube/v3/playlistItems/?${stringify(configStatusMongolices)}`, response => {
+    https.get(`https://www.googleapis.com/youtube/v3/playlistItems/?${stringify(configStatusMongolices)}`, result => {
         let data = ''
-        response.on('error', err => console.log(err))
-        response.on('data', data_ => data += data_)
-        response.on('end', () => response = JSON.parse(data))
+        result.on('error', err => console.log(err))
+        result.on('data', data_ => data += data_)
+        result.on('end', () => response = JSON.parse(data))
     })
 
     return response
