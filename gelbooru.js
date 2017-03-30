@@ -23,7 +23,9 @@ exports.gelbooru = (tags, msg, botInstance) => {
                 if (randomPost) {
                     response = `http:${randomPost.$.sample_url}`
                     console.log(response)
-                    botInstance.sendPhoto(msg.chat.id, response)
+                    botInstance.sendPhoto(msg.chat.id, response).catch(err => {
+                        console.log(err)
+                    })
                 }
             })
         })
