@@ -4,7 +4,7 @@ const parser = new xml2js.Parser()
 const stringify = require('query-string').stringify
 const getRandomInt = require('./utils').getRandomInt
 
-exports.gelbooru = tags => {
+exports.gelbooru = (tags, msg, botInstance) => {
     const config = {
         page: 'dapi',
         s: 'post',
@@ -21,6 +21,7 @@ exports.gelbooru = tags => {
                 const randomPost = getRandomInt(1, result.posts.post.length)
                 if (result.posts.post[randomPost - 1]) {
                     response = `http:${result.posts.post[randomPost - 1].sample_url}`
+                    botInstance.sendPhoto(msg.chat.id, response)
                 }
             })
         })
