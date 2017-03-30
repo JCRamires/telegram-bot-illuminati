@@ -20,13 +20,11 @@ exports.gelbooru = (tags, msg, botInstance) => {
             parser.parseString(data, (err, result) => {
                 const randomInt = getRandomInt(1, result.posts.post.length)
                 const randomPost = result.posts.post[randomInt - 1]
-                console.log(randomPost)
-                //
-                // if (result.posts.post[randomPost - 1]) {
-                //     response = `http:${result.posts.post[randomPost - 1].sample_url}`
-                //     console.log(response)
-                //     botInstance.sendPhoto(msg.chat.id, response)
-                // }
+                if (randomPost) {
+                    response = `http:${randomPost.$.sample_url}`
+                    console.log(response)
+                    botInstance.sendPhoto(msg.chat.id, response)
+                }
             })
         })
     })
