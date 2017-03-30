@@ -57,7 +57,6 @@ botInstance.onText(/^\/danbooru((\s\w+)+)$/i, (msg, match) => {
 botInstance.onText(/^\/gelbooru((\s\w+)+)$/i, (msg, match) => {
     const searchTerm = match[1].trim()
     const result = gelbooru(searchTerm)
-    console.log(result)
     if (result) {
         botInstance.sendPhoto(msg.chat.id, result)
     }
