@@ -6,6 +6,7 @@ const danbooru = require('danbooru')
 const Tgfancy = require('tgfancy')
 const gelbooru = require('./gelbooru').gelbooru
 const getLastVideo = require('./youtube').getLastVideo
+const getMongolice = require('./youtube').getMongolice
 
 const botInstance = new Tgfancy(token, {
     polling: true,
@@ -62,6 +63,10 @@ botInstance.onText(/^\/gelbooru((\s\w+)+)$/i, (msg, match) => {
 
 botInstance.onText(/^\/calibre$/i, msg => {
     getLastVideo(msg, botInstance)
+})
+
+botInstance.onText(/^\/mongolice/i, msg => {
+    getMongolice(msg, botInstance)
 })
 
 botInstance.onText(/loli/i, msg => {
