@@ -46,13 +46,14 @@ function getStatusMongolice() {
 
 exports.getMongolice = (msg, botInstance) => {
     const status = getStatusMongolice()
+    console.log(status)
+    const pages = Math.floor(status.pageInfo.totalResults)
+    const randomPage = getRandomInt(1, pages)
     const config = {
         part: 'contentDetails',
         playlistId: process.env.YOUTUBE_PLAYLIST_ID,
         key: process.env.YOUTUBE_API_KEY
     }
-    const pages = Math.floor(status.pageInfo.totalResults)
-    const randomPage = getRandomInt(1, pages)
     let pageToken
     for (let i = 0; i < randomPage; i = i + 1) {
         config.pageToken = pageToken
