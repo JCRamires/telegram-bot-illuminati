@@ -16,7 +16,10 @@
         "body-parser": "^1.15.1",
         "danbooru": "^1.4.8",
         "express": "^4.13.4",
+        "lodash": "^4.17.4",
         "mongodb": "^2.1.18",
-        "tgfancy": "^0.9.0"
+        "query-string": "^4.3.2",
+        "tgfancy": "^0.9.0",
+        "xml2js": "^0.4.17"
     }
 }

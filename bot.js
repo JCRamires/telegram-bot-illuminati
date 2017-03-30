@@ -4,6 +4,7 @@ const utils = require('./utils')
 
 const danbooru = require('danbooru')
 const Tgfancy = require('tgfancy')
+const gelbooru = require('./gelbooru').gelbooru
 
 const botInstance = new Tgfancy(token, {
     polling: true,
@@ -51,6 +52,14 @@ botInstance.onText(/^\/danbooru((\s\w+)+)$/i, (msg, match) => {
             }
         }
     })
+})
+
+botInstance.onText(/^\/gelbooru((\s\w+)+)$/i, (msg, match) => {
+    const searchTerm = match[1].trim()
+    const result = gelbooru(searchTerm)
+    if (result) {
+        botInstance.sendPhoto(msg.chat.id, result)
+    }
 })
 
 botInstance.onText(/loli/i, msg => {
