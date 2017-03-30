@@ -11,7 +11,7 @@ exports.gelbooru = tags => {
         q: 'index',
         tags
     }
-    console.log(config)
+    let response
     https.get(`https://gelbooru.com/index.php?${stringify(config)}`, response => {
         let data = ''
         response.on('error', err => console.log(err))
@@ -20,10 +20,11 @@ exports.gelbooru = tags => {
             parser.parseString(data, (err, result) => {
                 const randomPost = getRandomInt(1, result.posts.post.length)
                 if (result.posts.post[randomPost - 1]) {
-                    console.log(result)
-                    return `http:${result.posts.post[randomPost - 1].sample_url}`
+                    response = `http:${result.posts.post[randomPost - 1].sample_url}`
                 }
             })
         })
     })
+
+    return response
 }
