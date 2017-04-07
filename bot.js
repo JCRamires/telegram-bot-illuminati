@@ -67,6 +67,7 @@ botInstance.onText(/^\/calibre$/i, msg => {
 
 botInstance.onText(/^\/mongolice/i, msg => {
     getMongolice(msg, botInstance)
+    console.log('debug do mongol')
 })
 
 botInstance.onText(/loli/i, msg => {
