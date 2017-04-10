@@ -112,15 +112,6 @@ botInstance.onText(/pizza/i, msg => {
     }
 })
 
-botInstance.onText(/dota/i, msg => {
-    if (utils.probability(17)) {
-        utils.checkCommandCooldown('dota', db, () => {
-            botInstance.sendMessage(msg.chat.id, 'Dota é sempre um erro')
-            utils.setTimeLastCommandUsed()
-        })
-    }
-})
-
 botInstance.onText(/tengu/i, msg => {
     if (utils.probability(30)) {
         utils.checkCommandCooldown('tengu', db, () => {
